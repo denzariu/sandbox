@@ -1,17 +1,18 @@
 import { createContext, useState } from "react";
 
-interface ThemeContextType {
+interface ViewContextType {
   view: string;
   toggleView: () => void;
 }
 
 // Creating a View Context
-export const ViewContext = createContext<ThemeContextType>({ view: 'desktop', toggleView: () => {}});
+export const ViewContext = createContext<ViewContextType>({ view: 'desktop', toggleView: () => {}});
 
 
 // Creating a Provider for the Context
-const ThemeProvider = ({ children }: any) => {
-    // Perspective Toggle: 'mobile' <-> 'desktop' 
+const ViewProvider = ({ children }: any) => {
+  
+  // Perspective Toggle: 'mobile' <-> 'desktop' 
   const [view, setView] = useState<string>('desktop');
 
   const toggleView = () => {
@@ -25,4 +26,4 @@ const ThemeProvider = ({ children }: any) => {
   );
 }
 
-export default ThemeProvider
+export default ViewProvider
