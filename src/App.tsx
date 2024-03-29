@@ -12,7 +12,6 @@ function App() {
       <ViewProvider>
         <ThemeProvider>
           <NavBar/>
-          
           <Content/>
         </ThemeProvider>
       </ViewProvider>

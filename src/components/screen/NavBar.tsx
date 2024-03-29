@@ -7,13 +7,13 @@ function NavBar() {
   const {theme, toggleTheme} = useContext(ThemeContext)!
 
   return (
-    <div className='fixed flex align-middle justify-center top-0 left-0 right-0 h-20 gap-x-2 bg-slate-200'>
-      <button className='my-2 px-8 py-4 self-center bg-slate-400 text-white rounded-full'
+    <div className={`fixed flex align-middle justify-center top-0 left-0 right-0 h-20 gap-x-2 ${theme.colors.background.quaternary} border-b-2 border-gray-400 z-20`}>
+      <button className={`my-2 px-8 py-4 self-center ${theme.colors.background.tertiary} ${theme.colors.text.foreground} rounded-full`}
         onClick={perspective.toggleView}
       >
         Perspective
       </button>
-      <button className='my-2 px-8 py-4 self-center bg-slate-400 text-white rounded-full'
+      <button className={`my-2 px-8 py-4 self-center ${theme.colors.background.tertiary} ${theme.colors.text.foreground} rounded-full`}
         onClick={toggleTheme}
       >
         Theme
