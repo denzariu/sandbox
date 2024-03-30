@@ -12,7 +12,7 @@ export const Temperature = () => {
   }
 
   return (
-    <div className={`p-4 rounded-xl bg-gradient-to-bl flex justify-between items-center 
+    <div className={`p-4 rounded-xl bg-gradient-to-bl flex justify-between items-center  
     ${theme.colors.gradient.from.primary} 
     ${theme.colors.gradient.to.tertiary} 
     ${theme.colors.text.foreground}`}>
@@ -26,7 +26,7 @@ export const Temperature = () => {
       </button>
       <div className={`flex flex-col items-center ${theme.colors.text.background}`}>
         <p className={`text-3xl font-bold opacity-100`}>{temperature + '°'}</p>
-        <div className='flex items-center gap-x-1'>
+        <div className='flex items-center gap-x-1 font-semibold'>
           <Weather height={16} width={16} color={theme.colors.fill.quaternary}/>
           <p>Cool</p>
         </div>

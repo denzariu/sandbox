@@ -4,6 +4,10 @@ import { ThemeContext } from '../context/Theme'
 import Card from '../default/Card'
 import { Thermostat } from '../../assets/svgs'
 import Temperature from '../default/mini/Temperature'
+import CardCut from '../default/CardCut'
+import '../../index.css'
+import Luminosity from '../default/mini/Luminosity'
+
 
 function Content() {
   const perspective = useContext(ViewContext)
@@ -20,7 +24,7 @@ function Content() {
         <div className='flex flex-col items-center text-center'>
           <p className={theme.colors.background.quaternary + ' w-36 ' + theme.colors.text.foreground}>{perspective.view.toUpperCase()}</p>
           <p className={theme.colors.background.tertiary + ' w-36 ' + theme.colors.text.foreground}>{theme.isDark ? 'Dark Theme' : 'Light Theme'}</p>
-          <p className='border-[0.1rem] mt-4 border-blue-400 w-full'></p>
+          <p className='border-[0.1rem] mt-4 border-slate-400 w-full'></p>
         </div>
         <br/>
 
@@ -29,29 +33,22 @@ function Content() {
           <Card
             title='Thermostat'
             subtitle='Cooling to 20°'
-            icon={<Thermostat height={24} width={24} color={theme.colors.fill.quaternary}/>}
+            icon={<Thermostat key={'1'} height={24} width={24} color={theme.colors.fill.quaternary}/>}
+            children={[<Temperature/>]}
+            color={theme.colors.background.primary}
+          />
+          <CardCut
+            title='Thermostat'
+            subtitle='Cooling to 20°'
+            icon={<Thermostat key={'2'} height={24} width={24} color={theme.colors.fill.quaternary}/>}
             children={[<Temperature/>]}
             color={theme.colors.background.primary}
           />
           <Card
-            title='Thermostat'
-            subtitle='Cooling to 20°'
-            icon={<Thermostat height={24} width={24} color={theme.colors.fill.quaternary}/>}
-            children={[<Temperature/>]}
-            color={theme.colors.background.primary}
-          />
-          <Card
-            title='Thermostat'
-            subtitle='Cooling to 20°'
-            icon={<Thermostat height={24} width={24} color={theme.colors.fill.quaternary}/>}
-            children={[<Temperature/>]}
-            color={theme.colors.background.primary}
-          />
-          <Card
-            title='Thermostat'
-            subtitle='Cooling to 20°'
-            icon={<Thermostat height={24} width={24} color={theme.colors.fill.quaternary}/>}
-            children={[<Temperature/>]}
+            title='Lamp'
+            subtitle='Settings for evening'
+            icon={<Thermostat key={'4'} height={24} width={24} color={theme.colors.fill.quaternary}/>}
+            children={[<Luminosity/>]}
             color={theme.colors.background.primary}
           />
         </div>

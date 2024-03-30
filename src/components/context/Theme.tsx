@@ -67,8 +67,8 @@ export const ThemeContext = createContext<ThemeContextType>({
       },
       
       text: {
-        foreground: "text-white",
-        background: "text-black"
+        foreground: "text-light_primary",
+        background: "text-light_quaternary"
       },
 
       fill: {
@@ -118,8 +118,8 @@ const ThemeProvider = ({ children }: any) => {
       },
       
       text: {
-        foreground: "text-white",
-        background: "text-black"
+        foreground: "text-light_primary",
+        background: "text-light_quaternary"
       },
 
       fill: {
@@ -166,8 +166,8 @@ const ThemeProvider = ({ children }: any) => {
       },
       
       text: {
-        foreground: "text-black",
-        background: "text-white"
+        foreground: "text-dark_primary",
+        background: "text-dark_quaternary"
       },
 
       fill: {

@@ -3,18 +3,29 @@
 html, body, label {
   /* font-family: 'Roboto', sans-serif; */
 }
+@layer base {
+:root {
+  --color-light_primary: 249 247 247; 
+  --color-light_secondary: 219 226 239;
+  --color-light_tertiary: 63 114 175;
+  --color-light_quaternary: 17 45 78;
 
-/* :root {
-  --color-light_primary: 249, 247, 247; 
-  --color-light_secondary: 219, 226, 239;
-  --color-light_tertiary: 63, 114, 175;
-  --color-light_quaternary: 17, 45, 78;
+  --color-dark_primary: 34 40 49; 
+  --color-dark_secondary: 49 54 63;
+  --color-dark_tertiary: 118 171 174;
+  --color-dark_quaternary: 238 238 238;
 
-  --color-dark_primary: 118, 171, 174; 
-  --color-dark_secondary: 49, 54, 63;
-  --color-dark_tertiary: 118, 171, 174;
-  --color-dark_quaternary: 238, 238, 238;
-} */
+  /* --light_primary: '#F9F7F7';
+  --light_secondary: '#DBE2EF';
+  --light_tertiary: '#3F72AF';
+  --light_quaternary: '#112D4E';
+
+  --dark_primary: '#222831';
+  --dark_secondary: '#31363F';
+  --dark_tertiary: '#76ABAE';
+  --dark_quaternary: '#EEEEEE'; */
+}
+}
 
 @tailwind base;
 @tailwind components;
