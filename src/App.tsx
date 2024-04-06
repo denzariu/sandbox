@@ -1,20 +1,23 @@
 import './App.css'
-import NavBar from './components/screen/NavBar'
 import Content from './components/screen/Content'
 import ThemeProvider from './components/context/Theme'
 import ViewProvider from './components/context/View'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import SideBar from './components/screen/SideBar'
 
+const queryClient = new QueryClient()
 
 function App() {
 
   return (
     <>
+    <QueryClientProvider client={queryClient}>
       <ViewProvider>
         <ThemeProvider>
-          <NavBar/>
-          <Content/>
+          <SideBar/>
         </ThemeProvider>
       </ViewProvider>
+      </QueryClientProvider>
     </>
   )
 }
