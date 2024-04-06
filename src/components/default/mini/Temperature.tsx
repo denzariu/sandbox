@@ -2,7 +2,12 @@ import { useState } from 'react'
 
 import { Minus, Plus, Weather } from '../../../assets/svgs'
 
-export const Temperature = () => {
+
+type TemperatureProps = {
+  from?: string,
+  to?: string,
+}
+export const Temperature = ({ from, to }: TemperatureProps) => {
 
   const [temperature, setTemperature] = useState(22)
 
@@ -11,9 +16,10 @@ export const Temperature = () => {
   }
 
   return (
-    <div className='p-4 rounded-xl bg-gradient-to-tr flex justify-between items-center  
-      from-primary from-[-90%]
-      to-neutral to-[110%]'
+    <div className={`p-4 rounded-xl bg-gradient-to-tr flex justify-between items-center  
+      ${from ? from : 'from-primary'} from-[-90%]
+      //via-secondary via-[90%]
+      ${to ? to : 'to-accent'} to-[190%]`}
     >
       <button 
         onClick={() => changeTemp(-1)}
@@ -24,7 +30,7 @@ export const Temperature = () => {
         <Minus height={16} width={16} color='fill-neutral-content'/>  
       </button>
       <div className='flex flex-col items-center'>
-        <p className='text-3xl font-bold opacity-100 text-neutral-content'>{temperature + '°'}</p>
+        <p className='text-3xl font-bold opacity-100 text-primary-content'>{temperature + '°'}</p>
         <div className='flex items-center gap-x-1 font-semibold text-primary-content'>
           <Weather height={16} width={16} color='fill-primary-content'/>
           <p>Cool</p>

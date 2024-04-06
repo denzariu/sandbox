@@ -35,7 +35,7 @@ function SideBar () {
   // State management for what is currently open on the page
   const [dropdown, open] = useReducer(reducer, initState)
   // Current content
-  const [content, setContent] = useState<ContentType>('element-card')  
+  const [content, setContent] = useState<ContentType>('all')  
 
   const perspective = useContext(ViewContext)
   const {theme, toggleTheme} = useContext(ThemeContext)
