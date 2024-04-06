@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import Content from './Content'
 import Card from '../default/Card'
 import CardCut from '../default/CardCut'
@@ -34,7 +33,7 @@ function ContentSwitch({ content }: ContentSwitchProps) {
           children={[<Temperature/>]}
           color='bg-neutral'
         />
-        
+
       return <></>
     }
 

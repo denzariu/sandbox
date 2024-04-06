@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useReducer, useState } from 'react'
+import { useContext, useReducer, useState } from 'react'
 import { ViewContext } from '../context/View'
 import { ThemeContext } from '../context/Theme'
 import { Dark, HighBrightness, Mobile } from '../../assets/svgs';
@@ -56,7 +56,7 @@ function SideBar () {
               <button 
                 onClick={() => open('menu')}
                 type="button" 
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hiddenNO hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hiddenDISABLED hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               >
                   <span className="sr-only">Open sidebar</span>
                   <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -97,7 +97,7 @@ function SideBar () {
                   onClick={() => open('user')}
                 >
                   <span className="sr-only">Open user menu</span>
-                  <img className="w-8 h-8 rounded-full" src="https://media.licdn.com/dms/image/D4D03AQFJOVwicsV57A/profile-displayphoto-shrink_100_100/0/1702470747169?e=1717632000&v=beta&t=y3yKaIkadQYqoG26wUCYxD61sOw3pkK2vR87-fqAPRE" alt="user photo"/>
+                  <img className="w-8 h-8 rounded-full" src="https://media.licdn.com/dms/image/D4D03AQFJOVwicsV57A/profile-displayphoto-shrink_100_100/0/1702470747169?e=1717632000&v=beta&t=y3yKaIkadQYqoG26wUCYxD61sOw3pkK2vR87-fqAPRE" alt="User Photo"/>
                 </button>
               <div className={`z-50 ${dropdown.user ? "" : "hidden"} -mx-[11.5rem] mt-72 sm:-mx-[13rem] text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
                 id="dropdown-user"
@@ -251,6 +251,9 @@ function SideBar () {
       </div>
     </aside>
 
+    {theme.isDark && 
+      <p className='fixed text-lg text-white z-50 right-0 bottom-0 p-2 bg-red-500 rounded-lg'>Color scheme is WIP</p>
+    }
     {/* Content Wrapper */}
     {/* Clean up pls */}
     <div data-theme={theme.isDark ? 'myDark' : 'myLight'}
@@ -264,9 +267,9 @@ function SideBar () {
       <div className={`min-h-screenDISABLED flex justify-center 
         ${perspective.view === 'desktop' ? 
         ''
-        : ' sm:w-[400px] sm:h-[740px] sm:scale-75 xl:scale-100 overflow-y-scroll border-black border-8 rounded-3xl p-2'}
+        : ' sm:w-[400px] sm:h-[740px] sm:scale-75 xl:scale-100 overflow-y-scroll border-black border-8 rounded-3xl py-2 '}
       `}>
-        <div className='flex flex-wrap justify-center gap-4 overflow-y-hidden'>
+        <div className='flex flex-wrap justify-center gap-4'>
           <ContentSwitch content={content}/>
         </div>
       </div>

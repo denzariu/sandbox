@@ -1,5 +1,4 @@
 import './App.css'
-import Content from './components/screen/Content'
 import ThemeProvider from './components/context/Theme'
 import ViewProvider from './components/context/View'
 import { QueryClient, QueryClientProvider } from 'react-query'

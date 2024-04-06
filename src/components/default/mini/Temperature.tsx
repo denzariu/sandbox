@@ -23,10 +23,10 @@ export const Temperature = () => {
       >
         <Minus height={16} width={16} color='fill-neutral-content'/>  
       </button>
-      <div className='flex flex-col items-center text-neutral-content'>
-        <p className='text-3xl font-bold opacity-100'>{temperature + '°'}</p>
-        <div className='flex items-center gap-x-1 font-semibold'>
-          <Weather height={16} width={16} color='fill-neutral-content'/>
+      <div className='flex flex-col items-center'>
+        <p className='text-3xl font-bold opacity-100 text-neutral-content'>{temperature + '°'}</p>
+        <div className='flex items-center gap-x-1 font-semibold text-primary-content'>
+          <Weather height={16} width={16} color='fill-primary-content'/>
           <p>Cool</p>
         </div>
       </div>
