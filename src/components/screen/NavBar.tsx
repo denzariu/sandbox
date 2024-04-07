@@ -1,136 +1,26 @@
-import { useContext, useReducer, useState } from 'react'
-import { ViewContext } from '../context/View'
-import { ThemeContext } from '../context/Theme'
-import { Dark, HighBrightness, Mobile } from '../../assets/svgs';
-import * as logo from '../../assets/logo.png'
-import ContentSwitch, { ContentType } from './ContentSwitch';
+import React, { useContext } from 'react'
+import { ContentType } from './ContentSwitch';
+import { ThemeContext } from '../context/Theme';
 
-const initState = {
-  user: false,
-  menu: false,
-  components: false
-};
-
-function reducer(state: typeof initState, action: string) {
-  if (action === 'menu') {
-    return {...state,
-      menu: !state.menu
-    };
+export type NavBarProps = {
+  props: {
+  dropdown: {
+    menu: boolean;
+    user: boolean;
+    components: boolean;
+  }, 
+  open:  React.Dispatch<string>, 
+  setContent: React.Dispatch<React.SetStateAction<ContentType>>
   }
-  else if (action === 'user') {
-    return {...state,
-      user: !state.user
-    }
-  }
-  else if (action === 'components') {
-    return {...state,
-      components: !state.components
-    }
-  }
-  throw Error('Unknown action.');
 }
 
-function SideBar () {
+function NavBar({props: {dropdown, open, setContent}}: NavBarProps) {
 
-  // State management for what is currently open on the page
-  const [dropdown, open] = useReducer(reducer, initState)
-  // Current content
-  const [content, setContent] = useState<ContentType>('all')  
-
-  const perspective = useContext(ViewContext)
-  const {theme, toggleTheme} = useContext(ThemeContext)
-
-  
+  const { theme } = useContext(ThemeContext)
+  console.log(dropdown)
 
   return (
     <>
-    
-    {/* NavBar */}
-    <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700" data-theme={theme.isDark ? 'myDark' : 'myLight'}>
-      <div className="px-3 py-3 lg:px-5 lg:pl-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-between flex-1 rtl:justify-end">
-
-            {/* Menu button & Logo*/}
-            <div className='flex items-center'>
-              <button 
-                onClick={() => open('menu')}
-                type="button" 
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hiddenDISABLED hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              >
-                  <span className="sr-only">Open sidebar</span>
-                  <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                  </svg>
-              </button>
-              <a href="https://denzariu.github.io" className="flex ms-2 md:me-24">
-                <img src={logo.default} className="h-8 me-3 bg-gray-100 rounded-md p-1" alt="Denzariu Logo" />
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-gray-700 dark:text-white">Demozariu</span>
-              </a>
-            </div>
-
-            {/* Perspective & Theme Buttons */}
-            <div className='flex items-center'>
-              <button className={`hidden sm:flex bg-primary text-primary-content rounded-full p-1 mx-2`}
-                onClick={perspective.toggleView}
-              >
-                <Mobile color='stroke-primary-content' height={24} width={24}/>
-              </button>
-              <button className={`bg-primary text-primary-content rounded-full p-2`}
-                onClick={toggleTheme}
-              >
-                {theme.isDark ? 
-                  <Dark height={18} width={18} color='stroke-primary-content fill-primary-content'/>
-                  :
-                  <HighBrightness height={18} width={18} color='fill-primary-content'/>
-                  
-                }
-              </button>
-            </div>
-          </div>
-
-          {/* User Icon */}
-          <div className="">
-            <div className="flex items-center ms-3 w-8 h-8">
-                <button type="button" 
-                  className="flex text-sm w-8 h-8 bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" 
-                  onClick={() => open('user')}
-                >
-                  <span className="sr-only">Open user menu</span>
-                  <img className="w-8 h-8 rounded-full" src="https://media.licdn.com/dms/image/D4D03AQFJOVwicsV57A/profile-displayphoto-shrink_100_100/0/1702470747169?e=1717632000&v=beta&t=y3yKaIkadQYqoG26wUCYxD61sOw3pkK2vR87-fqAPRE" alt="User Photo"/>
-                </button>
-              <div className={`z-50 ${dropdown.user ? "" : "hidden"} -mx-[11.5rem] mt-72 sm:-mx-[13rem] text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`}
-                id="dropdown-user"
-              >
-                <div className="px-4 py-3 max-w-48 sm:max-w-64">
-                  <p className="text-sm text-gray-900 dark:text-white">
-                    Sorin Sorescu
-                  </p>
-                  <p className="text-sm font-medium text-gray-900 truncate ... dark:text-gray-300">
-                    sorin.sorescu@denzariu.com
-                  </p>
-                </div>
-                <ul className="py-1">
-                  <li>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-
     {/* SideBar - Demo pages */}
     <aside id="logo-sidebar" 
       className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700
@@ -161,7 +51,7 @@ function SideBar () {
                       </svg>
                       <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Components</span>
                       <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                       </svg>
                 </button>
                 <ul id="dropdown-example" 
@@ -169,6 +59,16 @@ function SideBar () {
                     ${dropdown.components ? "": "hidden"}
                   `}
                 >
+                      <li>
+                        <a href="#player" 
+                          className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                          onClick={() => setContent('all')} 
+                        >
+                          All
+                        </a>
+                        <div className="bg-gray-700 h-[0.1rem] mt-2"/>
+                      </li>
+
                       <li>
                         <a href="#card" 
                           onClick={() => setContent('element-card')} 
@@ -185,14 +85,7 @@ function SideBar () {
                           Card Cut
                         </a>
                       </li>
-                      <li>
-                        <a href="#player" 
-                          className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                          onClick={() => setContent('all')} 
-                        >
-                          Player
-                        </a>
-                      </li>
+                      
                 </ul>
             </li>
             <li>
@@ -230,9 +123,9 @@ function SideBar () {
                 </a>
             </li>
             <li>
-                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <a href="#" onClick={() => setContent('log-in')} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                   <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                   </svg>
                   <span className="flex-1 ms-3 whitespace-nowrap">Sign In</span>
                 </a>
@@ -251,31 +144,12 @@ function SideBar () {
       </div>
     </aside>
 
+    
     {theme.isDark && 
       <p className='fixed text-lg text-white z-50 right-0 bottom-0 p-2 bg-red-500 rounded-lg'>Color scheme is WIP</p>
     }
-    {/* Content Wrapper */}
-    {/* Clean up pls */}
-    <div data-theme={theme.isDark ? 'myDark' : 'myLight'}
-      className={`
-        bg-accent pt-20 pb-4 w-full px-4 min-h-screen overflow-auto
-        ${perspective.view === 'desktop' ? 
-          'h-full'
-        : 'sm:w-auto sm:h-full flex justify-center items-center'}`
-      } 
-    >
-      <div className={`min-h-screenDISABLED flex justify-center 
-        ${perspective.view === 'desktop' ? 
-        ''
-        : ' sm:w-[400px] sm:h-[740px] sm:scale-75 xl:scale-100 overflow-y-scroll border-black border-8 rounded-3xl py-2 '}
-      `}>
-        <div className='flex flex-wrap justify-center gap-4'>
-          <ContentSwitch content={content}/>
-        </div>
-      </div>
-    </div>
     </>
   )
 }
 
-export default SideBar
+export default NavBar

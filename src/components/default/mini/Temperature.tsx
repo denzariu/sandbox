@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 
 import { Minus, Plus, Weather } from '../../../assets/svgs'
 
@@ -20,7 +20,9 @@ export const Temperature = ({ from, to }: TemperatureProps) => {
       ${from ? from : 'from-primary'} from-[-90%]
       //via-secondary via-[90%]
       ${to ? to : 'to-accent'} to-[190%]`}
+      key={useId()}
     >
+      {/* - */}
       <button 
         onClick={() => changeTemp(-1)}
         className='p-3 rounded-full text-3xl
@@ -29,6 +31,8 @@ export const Temperature = ({ from, to }: TemperatureProps) => {
       >
         <Minus height={16} width={16} color='fill-neutral-content'/>  
       </button>
+
+      {/* Temperature */}
       <div className='flex flex-col items-center'>
         <p className='text-3xl font-bold opacity-100 text-primary-content'>{temperature + '°'}</p>
         <div className='flex items-center gap-x-1 font-semibold text-primary-content'>
@@ -36,6 +40,8 @@ export const Temperature = ({ from, to }: TemperatureProps) => {
           <p>Cool</p>
         </div>
       </div>
+
+      {/* + */}
       <button
         onClick={() => changeTemp(+1)}
         className='p-3 rounded-full text-3xl

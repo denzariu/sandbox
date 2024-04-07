@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { PlayerLeft, PlayerPause, PlayerPlay, PlayerRight } from '../../../assets/svgs'
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 function Player() {
 
@@ -56,7 +56,8 @@ function Player() {
       bg-gradient-to-b 
       from-primary from-[-50%]
       to-secondary to-[150%]
-      rounded-3xl'
+      rounded-xl'
+      key={useId()}
     >
       {/* Image and song name */}
       <div className='flex space-x-3'>
@@ -81,7 +82,7 @@ function Player() {
           type='range'
           min={0}
           max={length}
-          defaultValue={elapsed}
+          // defaultValue={elapsed}
           value={elapsed}
           onChange={(event) => setElaspedTime(Number(event.target.value))}
         />

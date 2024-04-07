@@ -1,4 +1,5 @@
-import { Plus } from "../../assets/svgs"
+import { useId } from "react"
+import AddComponent from "./mini/AddComponent"
 
 type CardProps = {
   color: string,
@@ -15,7 +16,7 @@ function Card({title, subtitle, children, color, icon, iconColor}: CardProps) {
 
     // {/* Non-cropped Card */}
     // {/* Add min width */}
-    <div className={`w-80 sm:w-autoDISABLED h-fit p-3 rounded-3xl flex flex-col ${color} text-neutral-content group`}>
+    <div className={`w-80 sm:w-autoDISABLED h-fit p-3 rounded-3xl flex flex-col ${color} text-neutral-content group`} key={useId()}>
       
       {/* Header - Title/subtitle & Icon */}
       <div className='flex'>
@@ -36,17 +37,15 @@ function Card({title, subtitle, children, color, icon, iconColor}: CardProps) {
         </button>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 space-y-3">
         {/* Child objects */}
         {children?.map(child => 
-          child  
+          child
         )}
       </div>
 
       {/* Add Object */}
-      <div className="h-0 transition-all flex justify-center items-center duration-500 ease-in-out group-hover:h-20 hover:bg-primary bg-accent group-hover:p-4 group-hover:mt-4 rounded-3xl">
-        <Plus color="opacity-0 duration-500 ease-in-out group-hover:opacity-[1] fill-accent-content" height={24} width={24}/>
-      </div>
+      <AddComponent />
     </div>
 )
 }
