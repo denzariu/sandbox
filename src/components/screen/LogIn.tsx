@@ -5,28 +5,26 @@ import { Field, Form, Formik } from 'formik'
 import { GoogleCredentialResponse, GoogleLogin } from '@react-oauth/google'
 
 // import { JwtPayload, jwtDecode } from 'jwt-decode'
-import { object, string } from 'yup'
 import { Link, useLocation } from 'wouter'
 
 import Logo from '../../assets/logo.png'
 import { useCookies } from 'react-cookie'
+import { __DEV__ } from '@apollo/client/utilities/globals'
+import { LogInSchema } from '../utils/LogInSchema'
 
-// Clean-up!
 
-const LogInSchema = object().shape({
-  email: string().email('Invalid email').required('*'),
-  password: string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('*'),
-});
+
+////~~~ Clean-up! ~~~////
+
+
 
 function LogIn(): ReactElement {
+
+  // Init user cookies 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const [location, setLocation] = useLocation();
 
-  console.log(cookies, location)
-  
+
   //@ts-ignore
   const [encodeToken, {loadingE, errorE, dataE}] = useLazyQuery(
     ENCODE_TOKEN, 
@@ -47,6 +45,10 @@ function LogIn(): ReactElement {
   
   const [ popup, setPopup ] = useState<string>('');
   
+  // Delete this for PROD
+  // if (__DEV__)
+  // console.log(cookies, removeCookie, location, popup)
+  
 
   // Google OATH => Positive Response
   const handleResponse = (response: GoogleCredentialResponse) => {
@@ -62,6 +64,7 @@ function LogIn(): ReactElement {
 
   // Backend calls to check validity of the account
   const checkAccount = async (email_user: string, password_user?: string, credential?: string) => {
+    setPopup("Checking account...");
     const fields = { email: email_user ?? "", password: password_user ?? "", google_auth: credential ?? ""}
     return canLogIn({ variables: fields})
   }
@@ -70,18 +73,25 @@ function LogIn(): ReactElement {
   const onFormSubmit = async (values: any) => {
     const accountExists = await checkAccount(values.email, values.password, values.credential)
 
-    if (accountExists && accountExists.data && accountExists.data.canLogIn) {
+    console.log(accountExists)
+
+    if (accountExists && accountExists.data && accountExists.data.canLogIn.successful) {
       
-      const encoded_token = await encodeToken({ variables: { token: values.credential }})
-
-
-      setCookie('user', {email: values.email, session_token: encoded_token.data.encodeToken})
-      setLocation("/home");
+      if (values.credential) {
+        const encoded_token = await encodeToken({ variables: { token: values.credential }})
+        setCookie('user', {email: values.email, session_token: encoded_token.data.encodeToken})
+      }
+      else 
+        setCookie('user', {email: values.email, session_token: null})
+      // setLocation("/home"); // Redirect to /home
+      setPopup(accountExists.data.canLogIn.message)
     }
     else if (!accountExists)
       setPopup("Server is down.")
+    else if (!accountExists.data)
+      setPopup("Error on request.")
     else
-      setPopup("Email & password combination is incorrect.")
+      setPopup(accountExists.data.canLogIn.message)
   }
 
 
@@ -89,7 +99,9 @@ function LogIn(): ReactElement {
   return (
     <div className="flex flex-1 h-screen bg-secondary tracking-tight align-middle items-center justify-center -m-4" 
     >
-      <div className='fixed bottom-0 text-primary-content bg-red-600 right-0 p-2'>Heavily WIP</div>
+      <div className='fixed bottom-0 text-primary-content bg-red-600 right-0 p-2'>Design WIP</div>
+      
+
       <div className='flex-1 flex flex-col sm:flex-row mx-8 lg:mx-52 min-h-[30%] sm:min-h-[50%] sm:max-w-7xl justify-between border-2 border-primary-content bg-primary rounded-lg gap-x-4 p-4'>
         <div className='sm:flex-2 xl:flex-1 flex flex-col sm:flex-row sm:space-x-2'>
 
@@ -136,8 +148,12 @@ function LogIn(): ReactElement {
                 </p>
               </div>
 
+              
               {/* Email */}
               <div className='sm:border-t-2 sm:border-primary sm:pt-12'>
+              <div className=' top-16 left-0 text-red-400 text-right'>
+                {popup}
+              </div>
                 <span className='flex items-center justify-between'>
                   <label 
                     className="block text-sm font-medium leading-6 text-primary-content sm:text-primary"
@@ -187,18 +203,21 @@ function LogIn(): ReactElement {
                 >
                   Log In
                 </button>
-                <GoogleLogin 
-                  shape='circle'
-                  size='medium' 
-                  theme='outline' 
-                  type='icon'
-                  logo_alignment='center' 
-                  // width={100} 
-                  text='signin_with'
-                  onSuccess={handleResponse} 
-                  ux_mode='popup' //redirect?
-                  onError={handleErrorResponse} 
-                />
+                
+                <div className='sm:hidden'>
+                  <GoogleLogin 
+                    shape='circle'
+                    size='medium' 
+                    theme='outline' 
+                    type='icon'
+                    logo_alignment='center' 
+                    // width={100} 
+                    text='signin_with'
+                    onSuccess={handleResponse} 
+                    ux_mode='popup' //redirect?
+                    onError={handleErrorResponse} 
+                  />
+                </div>
                  
               </span>
               

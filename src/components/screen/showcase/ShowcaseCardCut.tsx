@@ -1,4 +1,4 @@
-import React, { useId } from 'react'
+import { useId } from 'react'
 import CardCut from '../../default/CardCut'
 import { Lamp, Thermostat } from '../../../assets/svgs'
 import Temperature from '../../default/mini/Temperature'

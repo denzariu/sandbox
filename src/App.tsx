@@ -5,6 +5,7 @@ import ViewProvider from './components/context/View'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import Main from './components/screen/Main'
 import { useCookies } from 'react-cookie'
+import { __DEV__ } from '@apollo/client/utilities/globals'
 
 const queryClient = new QueryClient()
 
@@ -13,14 +14,16 @@ function App() {
 
 
   const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
+    uri: "https://backend-vbvs.onrender.com/graphql",
     cache: new InMemoryCache(),
   });
 
   function handleLogin(user: any) {
     setCookie('user', user, { path: '/' })
   }
-  console.log({cookies})
+
+  if (__DEV__)
+    console.log({cookies, handleLogin})
 
   return (
     <>

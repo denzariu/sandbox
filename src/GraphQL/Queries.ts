@@ -1,4 +1,4 @@
-import { QueryResult, gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export const GET_ALL_ACCOUNTS =  gql`
   query {
@@ -41,7 +41,9 @@ export const CAN_LOGIN = gql`
         email: $email,
         password: $password,
         google_auth: $google_auth
-      )
+      ) {
+        successful, message
+      }
     }
 `
 
