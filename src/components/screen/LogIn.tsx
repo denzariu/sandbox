@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement, useContext, useState } from 'react'
 import { CAN_LOGIN, DECODE_TOKEN, ENCODE_TOKEN } from '../../GraphQL/Queries'
 import { useLazyQuery } from '@apollo/client'
 import { Field, Form, Formik } from 'formik'
@@ -10,7 +10,8 @@ import { Link, useLocation } from 'wouter'
 import Logo from '../../assets/logo.png'
 import { useCookies } from 'react-cookie'
 import { __DEV__ } from '@apollo/client/utilities/globals'
-import { LogInSchema } from '../utils/LogInSchema'
+import { LogInSchema } from '../utils/AuthSchema'
+import { ContentContext } from './ContentSwitch'
 
 
 
@@ -19,6 +20,8 @@ import { LogInSchema } from '../utils/LogInSchema'
 
 
 function LogIn(): ReactElement {
+
+  const { toggleContent } = useContext(ContentContext)
 
   // Init user cookies 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
@@ -46,8 +49,8 @@ function LogIn(): ReactElement {
   const [ popup, setPopup ] = useState<string>('');
   
   // Delete this for PROD
-  // if (__DEV__)
-  // console.log(cookies, removeCookie, location, popup)
+  if (__DEV__)
+    console.log(cookies, removeCookie, location, popup, setLocation)
   
 
   // Google OATH => Positive Response
@@ -73,8 +76,6 @@ function LogIn(): ReactElement {
   const onFormSubmit = async (values: any) => {
     const accountExists = await checkAccount(values.email, values.password, values.credential)
 
-    console.log(accountExists)
-
     if (accountExists && accountExists.data && accountExists.data.canLogIn.successful) {
       
       if (values.credential) {
@@ -83,6 +84,7 @@ function LogIn(): ReactElement {
       }
       else 
         setCookie('user', {email: values.email, session_token: null})
+
       // setLocation("/home"); // Redirect to /home
       setPopup(accountExists.data.canLogIn.message)
     }
@@ -151,9 +153,10 @@ function LogIn(): ReactElement {
               
               {/* Email */}
               <div className='sm:border-t-2 sm:border-primary sm:pt-12'>
-              <div className=' top-16 left-0 text-red-400 text-right'>
-                {popup}
-              </div>
+                {/* Popup / Warning */}
+                <div className=' top-16 left-0 text-red-400 text-right'>
+                  {popup}
+                </div>
                 <span className='flex items-center justify-between'>
                   <label 
                     className="block text-sm font-medium leading-6 text-primary-content sm:text-primary"
@@ -223,12 +226,12 @@ function LogIn(): ReactElement {
               
               <div className='flex-[0.8] flex-col flex justify-end self-end'>
                 <p className='text-sm text-primary-content sm:text-primary font-light'>Don't have an account?</p>
-                <Link 
-                    to='/signup'
-                    className='text-primary-content sm:text-primary mt-1 self-end text-base transition-colors duration-150 hover:text-secondary'
+                <a
+                    href="#signup" onClick={() => toggleContent('sign-up')}
+                    className=' text-primary-content sm:text-primary mt-1 self-end text-base transition-colors duration-150 hover:text-secondary'
                 >
                   Sign Up
-                </Link>
+                </a>
               </div>
             </Form>
           )}

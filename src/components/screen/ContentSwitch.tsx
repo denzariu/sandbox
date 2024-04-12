@@ -1,35 +1,78 @@
-
+import { createContext, useState } from "react";
 import LogIn from './LogIn'
+import SignUp from './SignUp'
 import Dashboard from './showcase/Dashboard'
 import ShowcaseCard from './showcase/ShowcaseCard'
 import ShowcaseCardCut from './showcase/ShowcaseCardCut'
 
 
-export type ContentType = 'all' | 'element-card' | 'element-card-cut' | 'log-in'
-type ContentSwitchProps = {
-  content: ContentType
+export type ContentType = 'all' | 'element-card' | 'element-card-cut' | 'log-in' | 'sign-up' | undefined
+
+// Context Type
+interface ContentContextType {
+  contentType: ContentType;
+  content: JSX.Element;
+  toggleContent: (type: ContentType) => void;
 }
 
-function ContentSwitch({ content }: ContentSwitchProps) {
+// Creating a Theme Context
+export const ContentContext = createContext<ContentContextType>({
+  contentType: 'all',
+  content: <Dashboard/>,
+  toggleContent: (type: ContentType) => {}
+
+})
+
+// Creating a Provider for the Context
+function ContentProvider({ children }: any) {
   
-  // useEffect(() => {
-  switch(content) {
-    case 'all': 
-      return <Dashboard/>
+  const [contentType, setContentType] = useState<ContentType>('all');
+  const [content, setContent] = useState<JSX.Element>(<Dashboard/>);
 
-    case 'element-card':
-      return <ShowcaseCard/>
 
-    case 'element-card-cut':
-      return <ShowcaseCardCut/>
+  const toggleContent = (type: ContentType) => {
+    setContentType('all')
+    switch(type) {
+      case 'all': 
+        setContent(<Dashboard/>)
+        break;
+  
+      case 'element-card':
+        setContent(<ShowcaseCard/>)
+        break;
+  
+      case 'element-card-cut':
+        setContent(<ShowcaseCardCut/>)
+        break;
+      
+      case 'log-in':
+        setContent(<LogIn/>)
+        break;
+      
+      case 'sign-up':
+        setContent(<SignUp/>)
+        break;
     
-    case 'log-in':
-      return <LogIn/>
+  
+      default:
+        setContentType(undefined)
+        setContent(<></>)
+    }
+  };
 
-    default:
-      return <></>
-  }
+  
+
+  return (
+    <ContentContext.Provider value={{ contentType, content, toggleContent }}>
+      {children}
+    </ContentContext.Provider>
+  );
+  
+
+  
 }
 
 
-export default ContentSwitch
+
+
+export default ContentProvider

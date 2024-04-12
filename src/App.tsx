@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import Main from './components/screen/Main'
 import { useCookies } from 'react-cookie'
 import { __DEV__ } from '@apollo/client/utilities/globals'
+import ContentProvider from './components/screen/ContentSwitch'
 
 const queryClient = new QueryClient()
 
@@ -15,6 +16,7 @@ function App() {
 
   const client = new ApolloClient({
     uri: "https://backend-vbvs.onrender.com/graphql",
+    // uri: "http://localhost:5000/graphql",
     cache: new InMemoryCache(),
   });
 
@@ -29,11 +31,13 @@ function App() {
     <>
       <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
-          <ViewProvider>
-            <ThemeProvider>
-              <Main/>
-            </ThemeProvider>
-          </ViewProvider>
+          <ContentProvider>
+            <ViewProvider>
+              <ThemeProvider>
+                <Main/>
+              </ThemeProvider>
+            </ViewProvider>
+          </ContentProvider>
         </QueryClientProvider>
       </ApolloProvider>
     </>
