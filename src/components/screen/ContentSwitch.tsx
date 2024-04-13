@@ -4,9 +4,10 @@ import SignUp from './SignUp'
 import Dashboard from './showcase/Dashboard'
 import ShowcaseCard from './showcase/ShowcaseCard'
 import ShowcaseCardCut from './showcase/ShowcaseCardCut'
+import P5 from "./P5";
 
 
-export type ContentType = 'all' | 'element-card' | 'element-card-cut' | 'log-in' | 'sign-up' | undefined
+export type ContentType = 'all' | 'element-card' | 'element-card-cut' | 'p5' | 'log-in' | 'sign-up' | undefined
 
 // Context Type
 interface ContentContextType {
@@ -19,6 +20,7 @@ interface ContentContextType {
 export const ContentContext = createContext<ContentContextType>({
   contentType: 'all',
   content: <Dashboard/>,
+  //@ts-ignore
   toggleContent: (type: ContentType) => {}
 
 })
@@ -43,6 +45,10 @@ function ContentProvider({ children }: any) {
   
       case 'element-card-cut':
         setContent(<ShowcaseCardCut/>)
+        break;
+
+      case 'p5': 
+        setContent(<P5/>)
         break;
       
       case 'log-in':

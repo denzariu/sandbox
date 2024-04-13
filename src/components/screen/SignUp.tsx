@@ -1,5 +1,5 @@
 import { ReactElement, useContext, useState } from 'react'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Field, Form, Formik } from 'formik'
 import { GoogleCredentialResponse, GoogleLogin } from '@react-oauth/google'
 
@@ -20,7 +20,7 @@ function SignUp(): ReactElement {
   const { toggleContent } = useContext(ContentContext)
 
   const [ popup, setPopup ] = useState<string>('');
-  const [ credential, setCredential ] = useState<any>(undefined);
+  // const [ credential, setCredential ] = useState<any>(undefined);
   const [ profile, setProfile ] = useState<any>(undefined);
   
   //@ts-ignore
@@ -31,7 +31,7 @@ function SignUp(): ReactElement {
 
   const handleResponse = (response: GoogleCredentialResponse) => {
     //Set Credentials
-    setCredential(response.credential)
+    // setCredential(response.credential)
     
     //Get Profile Info
     if (response.credential) {

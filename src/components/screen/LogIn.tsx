@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import { GoogleCredentialResponse, GoogleLogin } from '@react-oauth/google'
 
 // import { JwtPayload, jwtDecode } from 'jwt-decode'
-import { Link, useLocation } from 'wouter'
+import { useLocation } from 'wouter'
 
 import Logo from '../../assets/logo.png'
 import { useCookies } from 'react-cookie'

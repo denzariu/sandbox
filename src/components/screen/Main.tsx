@@ -1,8 +1,8 @@
-import { useContext, useReducer, useState } from 'react'
+import { useContext, useReducer } from 'react'
 import { ViewContext } from '../context/View'
 import { ThemeContext } from '../context/Theme'
 
-import { ContentContext, ContentType } from './ContentSwitch';
+import { ContentContext } from './ContentSwitch';
 import NavBar from './NavBar';
 import NavTopBar from './NavTopBar';
 
