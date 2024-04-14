@@ -9,7 +9,7 @@ const P5: React.FC = () => {
     X: 45,
     Y: 45
   })
-  const [windowSize, setWindowSize] = useState({
+  const [windowSize] = useState({
     width: 384,
     height: 384
   })
@@ -28,25 +28,16 @@ const P5: React.FC = () => {
         colorize={colorize}
       /> 
 
-      <div className='fixed flex flex-col p-4 bg-primary right-0 bottom-0 rounded-tl-lg font-semibold text-primary-content space-y-2'>
+      <div className='fixed flex flex-col p-4 bg-primary sm:right-0 bottom-0 rounded-t-2xl  sm:rounded-tr-none font-semibold text-primary-content space-y-2'>
 
-        {/* Image */}
-        <input
-          type="file"
-          name="myImage"
-          onChange={(event) => {
-            if (event && event.target && event.target.files && event.target.files[0]) {
-              setSelectedImage(event.target.files[0]);
-            }
-          }}
-        />
+        
 
         {/* True Color */}
         <label className="label cursor-pointer">
           <span>Monochromatic</span> 
           <input type="checkbox" className="checkbox checkbox-accent" 
             checked={!colorize} 
-            onChange={(e) => setColorize(prev => !prev)}
+            onChange={() => setColorize(prev => !prev)}
           />
         </label>
 
@@ -84,7 +75,20 @@ const P5: React.FC = () => {
             <h3 className='w-4 flex justify-center'>{circleSize.X}</h3>
           </div>
         </label>
+        
+        {/* Image */}
+        <input
+          type="file"
+          name="myImage"
+          className='file-input file-input-bordered w-full max-w-xs'
+          onChange={(event) => {
+            if (event && event.target && event.target.files && event.target.files[0]) {
+              setSelectedImage(event.target.files[0]);
+            }
+          }}
+        />
       </div>
+      
     </div>
   )
 };

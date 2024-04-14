@@ -74,13 +74,14 @@ const Sketch = ({ circleScale, windowSize, step, image, colorize }: SketchProps)
   
     for (let x = 0; x < img.width; x += step.X) {
       for (let y = 0; y < img.height; y += step.Y) {
+        //@ts-ignore
         const c: Color = img.get(x, y);
         const brightness = p.brightness(c);
         if (brightness === 0) continue
         // Adjust circle size based on brightness or other criteria
         const adjustedSize = p.map(brightness, 0, 255, 1, circleScale * 10);
   
-        // Draw circles based on color and position
+        //@ts-ignore - Draw circles based on color and position
         colorize ? p.fill(c) : p.fill(100, 100, 250, c[4])
 
         p.ellipse(x*scale.x + adjustedSize / 2, y*scale.y + adjustedSize / 2, adjustedSize, adjustedSize);
