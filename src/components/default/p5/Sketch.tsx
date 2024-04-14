@@ -28,16 +28,25 @@ const Sketch = ({ circleScale, windowSize, step, image, colorize }: SketchProps)
     if (canvasParentRef.current) {
       const parent = canvasParentRef.current;
       canvasRef.current?.remove()
+      
       canvasRef.current = new p5((p: p5) => {
         p.preload = () => {
-          img = p.loadImage(image ? URL.createObjectURL(image) : Logo); // Update the path to your image
+          img = p.loadImage(image ? URL.createObjectURL(image) : Logo, () => {console.log('loaded')}); // Update the path to your image
+          // Remove the p5.js default loading screen after image is loaded
+          const loadingElem = document.getElementById('p5_loading');
+          if (loadingElem) {
+            loadingElem.style.display = 'none';
+          }
         };
 
         p.setup = () => {
+
           const canvas = p.createCanvas(parent.offsetWidth, parent.offsetHeight);
           canvas.parent(parent);
+          
           p.noLoop(); // Ensure draw() is only called once
           analyzePixels(p)
+
         };
 
         // p.draw = () => {}
@@ -54,20 +63,12 @@ const Sketch = ({ circleScale, windowSize, step, image, colorize }: SketchProps)
     };
   }, [circleScale, windowSize, step, image, colorize]);
   
-  useEffect(() => {
-    if(canvasRef.current)
-    try{
-      canvasRef.current?.clear()
-    } catch (e) {
-      console.log(e)
-    }
-  }, [])
 
   const analyzePixels = (p: p5) => {
     if (!img) return;
   
-    p.clear(); // Clear the canvas
     // p.image(img, 0, 0, p.width, p.height);
+    p.clear()
     p.noStroke();
     scale.y = windowSize.height / img.height;
     scale.x = windowSize.width / img.width;
@@ -89,7 +90,7 @@ const Sketch = ({ circleScale, windowSize, step, image, colorize }: SketchProps)
     }
   };
 
-  return <div ref={canvasParentRef} className='h-96 w-96 scale-75 sm:scale-100' />;
+  return <div ref={canvasParentRef} className='scale-75 sm:scale-100 h-96 w-96' />;
 
   
 };

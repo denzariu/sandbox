@@ -20,6 +20,7 @@ const P5: React.FC = () => {
       <h1 className='text-center text-2xl font-semibold text-'>
         This page uses P5.js, a JavaScript library for creative coding.
       </h1>
+
       <Sketch 
         circleScale={circleScale} 
         windowSize={windowSize} 
@@ -27,7 +28,6 @@ const P5: React.FC = () => {
         image={selectedImage} 
         colorize={colorize}
       /> 
-
       <div className='fixed flex flex-col p-4 bg-primary sm:right-0 bottom-0 rounded-t-2xl  sm:rounded-tr-none font-semibold text-primary-content space-y-2'>
 
         
