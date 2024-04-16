@@ -1,93 +1,32 @@
-import React, { useState } from 'react';
-import Sketch from '../default/p5/Sketch';
+import React, { useMemo, useState } from 'react';
+import Lines from '../default/p5/Lines';
+import SketchWrapper from '../default/p5/SketchWrapper';
 
 const P5: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [colorize, setColorize] = useState<boolean>(false)
-  const [circleScale, setCircleScale] = useState(5)
-  const [circleSize, setCircleSize] = useState({
-    X: 45,
-    Y: 45
-  })
-  const [windowSize] = useState({
-    width: 384,
-    height: 384
-  })
+
+  
+  const [currentCanvas, setCanvas] = useState<'sketch' | 'vessels'>('sketch')
+  const canvasSelect = useMemo(() => {
+    switch (currentCanvas) {
+      case 'sketch': 
+        return <SketchWrapper/>
+      case 'vessels': 
+        return <Lines/>
+        // return <></>
+    }
+  }, [currentCanvas])
 
 
   return (
-    <div className='space-y-4 flex flex-col items-center'>
-      <h1 className='text-center text-2xl font-semibold text-'>
+    <div className='space-y-4 flex flex-col items-center w-full'>
+      <h1 className='text-center text-2xl font-semibold text-secondary'>
         This page uses P5.js, a JavaScript library for creative coding.
       </h1>
-
-      <Sketch 
-        circleScale={circleScale} 
-        windowSize={windowSize} 
-        step={circleSize} 
-        image={selectedImage} 
-        colorize={colorize}
-      /> 
-      <div className='fixed flex flex-col p-4 bg-primary sm:right-0 bottom-0 rounded-t-2xl  sm:rounded-tr-none font-semibold text-primary-content space-y-2'>
-
-        
-
-        {/* True Color */}
-        <label className="label cursor-pointer">
-          <span>Monochromatic</span> 
-          <input type="checkbox" className="checkbox checkbox-accent" 
-            checked={!colorize} 
-            onChange={() => setColorize(prev => !prev)}
-          />
-        </label>
-
-        {/* Scale */}
-        <label>
-          <span>Circle Scale</span>
-          <div className='flex gap-4'>
-            <input 
-              className='flex-1 range range-accent range-xs self-center' 
-              type='range' 
-              onChange={(e) => setCircleScale(Number(e.target.value))} 
-              min={2} 
-              max={12}
-              defaultValue={circleScale}
-            />
-            <h3 className='w-4 flex justify-center'>{circleScale}</h3>
-          </div>
-        </label>
-
-        {/* Multiplier */}
-        <label>
-          <span>Circle Multiplier</span>
-          <div className='flex gap-4'>
-            <input 
-              className='flex-1 range range-accent range-xs self-center' 
-              type='range' 
-              onChange={(e) => setCircleSize({
-                X: Number(e.target.value), 
-                Y: Number(e.target.value)
-              })} 
-              min={10} 
-              max={60}
-              defaultValue={circleSize.X}
-            />
-            <h3 className='w-4 flex justify-center'>{circleSize.X}</h3>
-          </div>
-        </label>
-        
-        {/* Image */}
-        <input
-          type="file"
-          name="myImage"
-          className='file-input file-input-bordered w-full max-w-xs'
-          onChange={(event) => {
-            if (event && event.target && event.target.files && event.target.files[0]) {
-              setSelectedImage(event.target.files[0]);
-            }
-          }}
-        />
+      <div  className='inline space-x-2 border-2 border-secondary py-2 px-4 rounded-full bg-accent z-10'>
+        <button onClick={() => setCanvas('sketch')}>Sketch</button>
+        <button onClick={() => setCanvas('vessels')}>Vessels</button>        
       </div>
+      {canvasSelect}
       
     </div>
   )
