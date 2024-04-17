@@ -25,12 +25,12 @@ const Lines = ({ windowSize}: LinesProps) => {
           let width = parent.offsetWidth
           let height = parent.offsetHeight
 
-          const canvas = p.createCanvas(width, height);
+          const canvas = p.createCanvas(width+17, height);
           canvas.parent(parent)
 
           p.background(0);
           
-          // p.mousePressed(canvasClickedEvent);
+          canvas.mousePressed(saveCanvasWithFilename);
 
         };
 
@@ -56,14 +56,20 @@ const Lines = ({ windowSize}: LinesProps) => {
           p.resizeCanvas(parent.offsetWidth, parent.offsetHeight);
         };
 
+       
+        const saveCanvasWithFilename = () => {
+            p.save('always_watching.jpg');
+        }
+
       });
+      
     }
 
     return () => {
       canvasRef.current?.remove(); 
     };
   }, [ windowSize, resize ]);
-  
+
   
   
   function drawLines(p: any, frame: any, width: any, height: any, size1: any, len: any, rez3: any, coordinateX: any, coordinateY: any) {
@@ -97,8 +103,15 @@ const Lines = ({ windowSize}: LinesProps) => {
 
   return (
     <>
-      <button onClickCapture={() => setResize(true)} className='absolute self-center top-[50%] border-2 border-secondary py-2 px-4 rounded-full bg-accent z-10'>Reset</button>
-      <div ref={canvasParentRef} className='absolute -top-4 scale-100 h-full w-full overflow-hidden z-0'/>;  
+      <div className='absolute top-[50%] z-10 bg-red-200 border-2 border-[#DC1464] rotate-45 rounded-tl-full rounded-br-full overflow-hidden'>
+        <button onClickCapture={() => setResize(true)} 
+          className=' border-[16px] border-[#DC1464] w-24 h-24 rounded-full bg-black z-10 text-black hover:text-red-200 transition-colors delay-200 -rotate-45'
+        >
+          RESET
+        </button>
+      </div>
+
+      <div ref={canvasParentRef} className='absolute -top-4 scale-100 h-full w-full overflow-hidden z-0 bg-red-200'/>;  
     </>
   )
 };

@@ -32,9 +32,9 @@ function Card({title, subtitle, children, color, icon, iconColor}: CardProps) {
         </div>
 
         {/* Icon */}
-        <button className={'w-12 h-12 rounded-full self-center flex items-center justify-center ' + iconColor}>
+        <div className={'w-12 h-12 rounded-full self-center flex items-center justify-center ' + iconColor}>
           {icon}
-        </button>
+        </div>
       </div>
 
       <div className="mt-4 space-y-3">

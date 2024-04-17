@@ -165,25 +165,26 @@ export default {
               900: '#13514b',
             },
           },
-          'primary': '#75ABAE',           //700,
+          'primary': '#75A0AE',           //700,
           'primary-focus': '#1976d2',     //500
-          'primary-content': '#0c3a67',   //50  
+          'primary-content': '#DDECEC',   //50  
 
-          'secondary': '#A5CACC',         //700
+          'secondary': '#181F1F',         //700
           'secondary-focus': '#26a69a',   //500
           'secondary-content': '#f4fbfa', //50
 
-          'accent': '#31363F',
+          'accent': '#171A24',
           'neutral': '#222831',
 
           'accent-content': '#222222',
-          'neutral-content': '#E0E0E0',
+          'neutral-content': '#F0F0F0',
 
 
           // 'accent': colors.fuchsia[700],
           'accent-focus': colors.fuchsia[500],
           // 'neutral': colors.neutral[100],
           'neutral-focus': colors.neutral[200],
+          
           
           'base-100': colors.slate[900],
           'base-200': colors.slate[800],
@@ -207,6 +208,9 @@ export default {
     darkTheme: "dark",
   },
   plugins: [require("daisyui")],
+  extends: {
+    
+  }
 }
 
 // Colors in HEX and RGB:

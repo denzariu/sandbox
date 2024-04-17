@@ -59,7 +59,7 @@ function Main () {
         ${perspective.view === 'desktop' ? 'h-full' : 'sm:w-auto sm:h-full flex justify-center items-center'}`} 
     >
       <div 
-        className={`min-h-screenDISABLED flex justify-center 
+        className={`min-h-screenDISABLED flex justify-center
           ${perspective.view === 'desktop' ? 
           '' : ' sm:w-[400px] sm:h-[740px] sm:scale-75 xl:scale-100 overflow-y-scroll border-black border-8 rounded-3xl py-2 '}`}
       >

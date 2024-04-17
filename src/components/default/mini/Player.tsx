@@ -97,8 +97,8 @@ function Player() {
           className='p-2 bg-primary-content rounded-full'
         >
           {playing ? 
-            <PlayerPause width={32} height={32} color='fill-primary'/>
-          : <PlayerPlay width={32} height={32} color='fill-primary'/>
+            <PlayerPause width={32} height={32} color='fill-secondary'/>
+          : <PlayerPlay width={32} height={32} color='fill-secondary'/>
           }
         </button>
         <PlayerRight width={32} height={32} color='fill-primary-content'/>

@@ -12,7 +12,7 @@ import { useId } from 'react'
 function Dashboard() {
 
   return (
-    <div className='flex flex-wrap justify-center gap-4'>
+    <div className='flex flex-wrap justify-center gap-4 w-24 lg:w-auto'>
       <div className={`space-y-4`} key='content-row-1'> 
         
         <CardCut
@@ -26,7 +26,7 @@ function Dashboard() {
         <Card
           title='HomePod'
           subtitle='Playing...'
-          icon={<Lamp height={24} width={24} color='fill-secondary'/>}
+          icon={<Lamp height={24} width={24} color='fill-neutral-content'/>}
           iconColor='bg-accent'
           children={[<Temperature key={useId()}/>, <Player key={useId()}/>]}
           color='bg-neutral'
@@ -44,7 +44,7 @@ function Dashboard() {
         <Card
           title='HomePod'
           subtitle='Playing...'
-          icon={<Lamp height={24} width={24} color='fill-secondary'/>}
+          icon={<Lamp height={24} width={24} color='fill-neutral-content'/>}
           iconColor='bg-accent'
           children={[<Player key={useId()}/>]}
           color='bg-neutral'
@@ -90,7 +90,7 @@ function Dashboard() {
         <Card
           title='HomePod'
           subtitle='Playing...'
-          icon={<Lamp height={24} width={24} color='fill-secondary'/>}
+          icon={<Lamp height={24} width={24} color='fill-neutral-content'/>}
           iconColor='bg-accent'
           children={[<Player key={useId()}/>]}
           color='bg-neutral'
